@@ -7,18 +7,50 @@ import java.util.Map.Entry;
 
 public class text_to_arff{
 	
+	static HashMap<String, Integer> mapinterrogative = new HashMap<String, Integer>();
+	static HashMap<String, Integer> mapimperative = new HashMap<String, Integer>();
+	static HashMap<String, Integer> mapdeclarative = new HashMap<String, Integer>();
+	static HashMap<String, Integer> mapmerge = new HashMap<String, Integer>();
+    
+    int attribnum=1; // number of attributes
+	
+	Scanner scanner=new Scanner(System.in);
+	
+	
+	
 		public static void main(String[] args) throws IOException {
-			
-			
-	        HashMap<String, Integer> mapinterrogative = new HashMap<String, Integer>();
-	        HashMap<String, Integer> mapimperative = new HashMap<String, Integer>();
-	        HashMap<String, Integer> mapdeclarative = new HashMap<String, Integer>();
-	        HashMap<String, Integer> mapmerge = new HashMap<String, Integer>();
+				        
 	        
-//--------Interrogative attributes into HashMap	        
-			Scanner scanner = new Scanner(new FileReader("./src/resources/new0.txt")); // file input for interrogative sentences
+			text_to_arff object= new text_to_arff();
+			
+			mapinterrogative= object.interrogative();
+			mapimperative= object.imperative();
+			mapdeclarative= object.declarative();
+			mapmerge=object.attributefilegenerate();
+			
+			System.out.println(mapmerge);
+			System.out.println(mapmerge.size());
+	           
+		}	
 		
-	        int attribnum=1; // number of attributes
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		public HashMap<String,Integer> interrogative() throws FileNotFoundException{
+			
+			//--------Interrogative attributes into HashMap	        
+			scanner = new Scanner(new FileReader("./src/resources/new0.txt")); // file input for interrogative sentences
+		
+	        
 
 	        while (scanner.hasNextLine()) {
 	        	String sentence= scanner.nextLine();
@@ -41,13 +73,17 @@ public class text_to_arff{
 	        }
 	        
 	        scanner.close();
-	        //System.out.println(mapinterrogative);
-	        //System.out.println(mapinterrogative.keySet());
-	        System.out.println(attribnum);
-//--------end of Interrogative Sentences
-	        
-	        
-//--------Imperative attributes into HashMap		        
+	//--------end of Interrogative Sentences
+			return mapinterrogative;
+			
+			
+			
+			
+		}
+		
+		
+		public HashMap<String,Integer> imperative() throws FileNotFoundException{
+			//--------Imperative attributes into HashMap		        
 	        scanner = new Scanner(new FileReader("./src/resources/new1.txt"));			// file input for imperative sentences
 	        
 	        attribnum=1;
@@ -69,14 +105,20 @@ public class text_to_arff{
 	        }
 	             
 	        scanner.close();
-	        //System.out.println(mapimperative);
-	        //System.out.println(mapimperative.keySet());
-	        System.out.println(attribnum);
-//----------- End of Imperative Sentences	        
-	        
-	        
-	        
-//--------Daclarative attributes into HashMap		        
+//----------- End of Imperative Sentences
+			return mapimperative;
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		public HashMap<String,Integer> declarative() throws FileNotFoundException{
+			//--------Daclarative attributes into HashMap		        
 	        scanner = new Scanner(new FileReader("./src/resources/new2.txt"));			// file input for declarative sentences
 	        
 	        attribnum=1;
@@ -98,20 +140,24 @@ public class text_to_arff{
 	        }
 	             
 	        scanner.close();
-	        //System.out.println(mapdeclarative);
-	        //System.out.println(mapdeclarative.keySet());
-	        System.out.println(attribnum);
+			return mapdeclarative;
+			
+			
+			
 
-	        
-	        
-//----------Merging of Different Attributes in one HashMap	        
+		}
+		
+		
+		public HashMap<String,Integer> attributefilegenerate() throws IOException{
+			
+			//----------Merging of Different Attributes in one HashMap	        
 	        mapmerge.putAll(mapinterrogative);
 	        mapmerge.putAll(mapimperative);
 	        mapmerge.putAll(mapdeclarative);
 	        
 	        //System.out.println(mapmerge);
 	        //System.out.println(mapmerge.keySet());
-	        System.out.println(mapmerge.size());  		// Size of attributes
+	        //System.out.println(mapmerge.size());  		// Size of attributes
 	        
 	        FileWriter fstream;
 	        BufferedWriter out;
@@ -145,6 +191,9 @@ public class text_to_arff{
 	        }
 	        // lastly, close the file and end
 	        out.close();
-	        
-		}	
+			
+			return mapmerge;
+			
+		}
 }
+
